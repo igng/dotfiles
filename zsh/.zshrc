@@ -183,3 +183,10 @@ tmux-project() {
 
 [[ -f "$HOME/.config/zsh/projects.zsh" ]] &&
     source "$HOME/.config/zsh/projects.zsh"
+
+# devcontainers setup
+export PATH="$HOME/.devcontainers/bin:$PATH"
+# temp fix for podman and devcontainers
+export XDG_RUNTIME_DIR="/tmp/podman-run-$(id -u)"
+mkdir -p "$XDG_RUNTIME_DIR"
+chmod 700 "$XDG_RUNTIME_DIR"
