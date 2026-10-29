@@ -13,6 +13,7 @@ return {
                 cpp = { "clang_format" },
                 python = { "ruff_format" },
                 lua = { "stylua" },
+                tex = { "latexindent" },
             },
 
             format_on_save = function(bufnr)

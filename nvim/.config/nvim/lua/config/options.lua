@@ -27,11 +27,26 @@ opt.updatetime = 250
 vim.g.mapleader = ","
 
 vim.diagnostic.config({
-	virtual_text = true,
-	underline = true,
-	severity_sort = true,
+    virtual_text = false,
+    underline = true,
+    severity_sort = true,
+    float = {
+        border = "rounded",
+        source = true,
+        wrap = true,
+    },
+})
 
-	float = {
-		border = "rounded",
-	},
+-- Wait 500ms before triggering CursorHold
+vim.opt.updatetime = 500
+
+-- Automatically show diagnostics under the cursor
+vim.api.nvim_create_autocmd("CursorHold", {
+    group = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true }),
+    callback = function()
+        vim.diagnostic.open_float(nil, {
+            focus = false,
+            scope = "line",
+        })
+    end,
 })
