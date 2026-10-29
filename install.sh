@@ -105,6 +105,9 @@ done
 which curl &> /dev/null || sudo apt install curl
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
+# Install devcontainer 
+curl -fsSL https://raw.githubusercontent.com/devcontainers/cli/main/scripts/install.sh | sh
+
 # Stow every top-level, non-hidden directory (git, nvim, tmux, zsh, ...) into $HOME.
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$DOTFILES_DIR"
