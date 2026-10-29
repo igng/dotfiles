@@ -106,18 +106,7 @@ for p in "${TO_INSTALL[@]}"; do
     fi
 done
 
-# Move existing files into _bak
-if [ -f ~/.zshrc ]; then
-    echo "\tMoving ~/.zshrc into ~/.zshrc_bak"
-    mv ~/.zshrc ~/.zshrc_bak
-fi
-
-if [ -f ~/.tmux.conf ]; then
-    echo "\tMoving ~/.tmux.conf into ~/.tmux.conf_bak"
-    mv ~/.tmux.conf ~/.tmux.conf_bak
-fi
-
-# Install oh-my-zsh
+# Install oh-my-zsh (it should not ask to setup zsh as default)
 if [ ! -d ~/.oh-my-zsh ]; then
     sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
@@ -128,6 +117,17 @@ if command -v devcontainer >/dev/null 2>&1; then
 else
     echo "\tInstalling devcontainer..."
     curl -fsSL https://raw.githubusercontent.com/devcontainers/cli/main/scripts/install.sh | sh
+fi
+
+# Move existing files into _bak
+if [ -f ~/.zshrc ]; then
+    echo "\tMoving ~/.zshrc into ~/.zshrc_bak"
+    mv ~/.zshrc ~/.zshrc_bak
+fi
+
+if [ -f ~/.tmux.conf ]; then
+    echo "\tMoving ~/.tmux.conf into ~/.tmux.conf_bak"
+    mv ~/.tmux.conf ~/.tmux.conf_bak
 fi
 
 # Stow every package (git, nvim, tmux, zsh, ...) into $HOME.

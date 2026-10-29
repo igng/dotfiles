@@ -156,6 +156,7 @@ plugins=(git)
 
 export PATH="$PATH:$HOME/arm-gnu-toolchain-15.3.rel1-x86_64-arm-none-eabi/bin"
 alias l='ls -lh'
+alias ll='ls -lah'
 alias vim='nvim'
 
 tmux-project() {
