@@ -1,0 +1,22 @@
+{
+  "name": "devcontainer_example",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "options": [
+      "--ssh=default=${localEnv:SSH_AUTH_SOCK}",
+      "--secret=id=known_hosts,src=${localEnv:HOME}/.ssh/known_hosts"
+    ]
+  },
+
+  "workspaceMount": "type=tmpfs,destination=/workspace",
+  "workspaceFolder": "/home/user-devpod",
+
+  "mounts": [
+    "source=${localEnv:SSH_AUTH_SOCK},target=/ssh-agent,type=bind",
+    "source=${localEnv:HOME}/devcontainers/template/.devcontainer/setup-dotfiles.sh,target=/tmp/setup-dotfiles.sh,type=bind,readonly"
+  ],
+  "remoteEnv": {
+    "SSH_AUTH_SOCK": "/ssh-agent"
+  },
+  "postCreateCommand": "bash /tmp/setup-dotfiles.sh"
+}
