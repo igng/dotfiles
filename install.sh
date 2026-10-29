@@ -140,4 +140,4 @@ for pkg in "${TO_STOW[@]}"; do
     stow --restow --target="$HOME" "$pkg" || echo "warning: failed to stow $pkg (conflicts?)" >&2
 done
 
-unset -eu
+set +eu
