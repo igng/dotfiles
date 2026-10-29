@@ -1,4 +1,5 @@
-local excluded = require("local.formatting").excluded
+local ok, formatting = pcall(require, "local.formatting")
+local excluded = ok and formatting.excluded or {}
 
 return {
     {
