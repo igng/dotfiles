@@ -86,38 +86,58 @@ link_vim() {
 }
 
 if have nvim; then
-    echo "neovim already installed"
+    echo "neovim: already installed"
 else
+    echo "Installing nvim"
     install_nvim
     link_vim
 fi
 
-for p in tmux stow zsh; do
+echo "=== Installing packages"
+TO_INSTALL=(curl git stow tmux zsh)
+# Install required packages
+for p in "${TO_INSTALL[@]}"; do
+    [[ "$p" == "nvim" ]] && continue
     if have "$p"; then
-        echo "$p already installed"
+        echo "\t$p: already installed"
     else
-        echo "Installing $p..."
+        echo "\tInstalling $p..."
         pkg_install "$p"
     fi
 done
 
-# Install curl and wget; and the former to install oh-my-zsh
-which curl &> /dev/null || sudo apt install curl
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# Move existing files into _bak
+if [ -f ~/.zshrc ]; then
+    echo "\tMoving ~/.zshrc into ~/.zshrc_bak"
+    mv ~/.zshrc ~/.zshrc_bak
+fi
+
+if [ -f ~/.tmux.conf ]; then
+    echo "\tMoving ~/.tmux.conf into ~/.tmux.conf_bak"
+    mv ~/.tmux.conf ~/.tmux.conf_bak
+fi
+
+# Install oh-my-zsh
+if [ ! -d ~/.oh-my-zsh ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
 
 # Install devcontainer 
-curl -fsSL https://raw.githubusercontent.com/devcontainers/cli/main/scripts/install.sh | sh
+if command -v devcontainer >/dev/null 2>&1; then
+    echo "\tdevcontainer: already installed"
+else
+    echo "\tInstalling devcontainer..."
+    curl -fsSL https://raw.githubusercontent.com/devcontainers/cli/main/scripts/install.sh | sh
+fi
 
-# Move existing files into _bak
-echo "Moving ~/.zshrc into ~/.zshrc_bak"
-[ -f ~/.zshrc ] && mv ~/.zshrc ~/.zshrc_bak
-echo "Moving ~/.tmux.conf into ~/.tmux.conf_bak"
-[ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf_bak
-# Stow every top-level, non-hidden directory (git, nvim, tmux, zsh, ...) into $HOME.
+# Stow every package (git, nvim, tmux, zsh, ...) into $HOME.
+echo "=== Stowing packages"
 DOTFILES_DIR="${HOME}/dotfiles"
 cd "${DOTFILES_DIR}"
-for dir in */; do
-    pkg="${dir%/}"
-    echo "Stowing $pkg..."
+TO_STOW=(git nvim tmux zsh)
+for pkg in "${TO_STOW[@]}"; do
+    echo "\tStowing $pkg..."
     stow --restow --target="$HOME" "$pkg" || echo "warning: failed to stow $pkg (conflicts?)" >&2
 done
+
+unset -eu
