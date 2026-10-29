@@ -181,8 +181,8 @@ tmux-project() {
     fi
 }
 
-[[ -f "$HOME/.config/zsh/projects.zsh" ]] &&
-    source "$HOME/.config/zsh/projects.zsh"
+[[ -f "$HOME/.zshrc.local" ]] &&
+    source "$HOME/.zshrc.local"
 
 # devcontainers setup
 export PATH="$HOME/.devcontainers/bin:$PATH"
