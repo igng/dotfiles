@@ -114,8 +114,8 @@ echo "Moving ~/.zshrc into ~/.zshrc_bak"
 echo "Moving ~/.tmux.conf into ~/.tmux.conf_bak"
 [ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf_bak
 # Stow every top-level, non-hidden directory (git, nvim, tmux, zsh, ...) into $HOME.
-DOTFILES_DIR="~/dotfiles"
-cd "$DOTFILES_DIR"
+DOTFILES_DIR="${HOME}/dotfiles"
+cd "${DOTFILES_DIR}"
 for dir in */; do
     pkg="${dir%/}"
     echo "Stowing $pkg..."
