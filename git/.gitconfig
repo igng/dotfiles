@@ -1,0 +1,53 @@
+[include]
+    path = ~/.gitconfig.local
+[core]
+	editor = nvim
+	autocrlf = input
+	safecrlf = false
+[credential]
+	helper = cache
+[alias]
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'
+    lg = lg1
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[diff]
+    tool = nvimdiff
+[merge]
+	tool = nvimdiff
+[mergetool "vimdiff"]
+	cmd = nvim -d
+	trustExitCode = true
+[mergetool]
+	prompt = false
+    keepBackup = false
+
+# From Ep.14 Bits and Booze
+[column]
+    ui = auto   # display branches on multiple columns
+[branch]
+    sort = -committerdate   # sort branches by last commit date
+[diff]
+    algorithm = histogram  # clearer diff (consider also "patience")
+    colorMoved = plain      # different colors for "move" code and "add/remove" code  
+[push]
+    autoSetupRemote = true  # push branch to remote if not present
+    followTags = true       # also pushes tags if they are not on remote
+[fetch]
+    prune = true            # prune remote references that are not on the server anymore
+[help]
+    autocorrect = prompt    # when fixing wrong commands, ask for confirmation
+[commit]
+    verbose = true          # run "git diff" in commit messages instead of "git status"
+[rerere]   # REuse REcorded REsolution (record the way you resolved a conflict, reapply if same pattern is detected)
+    enabled = true
+    autoupdate = true
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+[merge]
+    conflictstyle = zdiff3  # better conflict highlighting
