@@ -186,8 +186,5 @@ tmux-project() {
 
 # devcontainers setup
 export PATH="$HOME/.devcontainers/bin:$PATH"
-# temp fix for podman and devcontainers (YEAH NO, it messes up everything)
-# export XDG_RUNTIME_DIR="/tmp/podman-run-$(id -u)"
-# mkdir -p "$XDG_RUNTIME_DIR"
-# chmod 700 "$XDG_RUNTIME_DIR"
 export PATH=$HOME/.local/bin:/usr/local/bin:$PATH
+export CONAN_CACERT_PATH="/etc/ssl/certs/ca-certificates.crt"
