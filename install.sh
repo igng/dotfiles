@@ -108,6 +108,11 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/too
 # Install devcontainer 
 curl -fsSL https://raw.githubusercontent.com/devcontainers/cli/main/scripts/install.sh | sh
 
+# Move existing files into _bak
+echo "Moving ~/.zshrc into ~/.zshrc_bak"
+[ -f ~/.zshrc ] && mv ~/.zshrc ~/.zshrc_bak
+echo "Moving ~/.tmux.conf into ~/.tmux.conf_bak"
+[ -f ~/.tmux.conf ] && mv ~/.tmux.conf ~/.tmux.conf_bak
 # Stow every top-level, non-hidden directory (git, nvim, tmux, zsh, ...) into $HOME.
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 cd "$DOTFILES_DIR"
