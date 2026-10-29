@@ -1,0 +1,10 @@
+{
+    "name": "template",
+    "build":
+    {
+        "dockerfile": "Dockerfile",
+        "options": []
+    },
+    "mounts": [],
+    "remoteEnv": {}
+}
